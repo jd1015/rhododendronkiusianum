@@ -95,5 +95,28 @@ namespace himanchutime
             //label1にスタートから現在までの時間を表示させる
             label1.Text = myStopWatch.Elapsed.ToString();
         }
+
+
+        public void button1_Click_Public(object sender, EventArgs e)
+        {
+            button1_Click(sender, e);
+        }
+        public string getStatusText()
+        {
+            return button1.Text;
+        }
+        public string getTimeStr()
+        {
+            return myStopWatch.Elapsed.ToString();
+        }
+
+        private void keyboardHook1_KeyboardHooked(object sender, HongliangSoft.Utilities.Gui.KeyboardHookedEventArgs e)
+        {
+            //if ("F12".Equals(e.KeyCode.ToString()))
+            if (e.AltDown && (e.UpDown.ToString().Equals("Down") && "F12".Equals(e.KeyCode.ToString())))
+            {
+                button1_Click(null, null);
+            }
+        }
     }
 }
