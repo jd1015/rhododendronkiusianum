@@ -14,6 +14,8 @@ namespace himanchutime
         public Form2()
         {
             InitializeComponent();
+            ShowInTaskbar = false;
+            iconSetting();
         }
 
         private void Form2_Load(object sender, EventArgs e)
@@ -47,7 +49,30 @@ namespace himanchutime
 
             //表示更新用タイマーのプロパティ
             this.timer1.Interval = 10;
+
         }
+
+        private void iconSetting()
+        {
+            this.notifyIcon1.Visible = true;
+            ContextMenuStrip menu = new ContextMenuStrip();
+            ToolStripMenuItem menuItem2 = new ToolStripMenuItem();
+            menuItem2.Text = "&スタート";
+            menuItem2.Click += new EventHandler(button1_Click);
+            menu.Items.Add(menuItem2);
+            ToolStripMenuItem menuItem = new ToolStripMenuItem();
+            menuItem = new ToolStripMenuItem();
+            menuItem.Text = "&終了";
+            menuItem.Click += new EventHandler(Close_Click);
+            menu.Items.Add(menuItem);
+            this.notifyIcon1.ContextMenuStrip = menu;
+        }
+
+        private void Close_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -64,6 +89,7 @@ namespace himanchutime
                 button2.Enabled = false;
                 //「スタート」だったボタンの表示を「ストップ」に変更
                 button1.Text = "ストップ";
+                Show();
             }
 
             //スイッチがoff以外のとき（つまりはonのとき）
@@ -79,6 +105,7 @@ namespace himanchutime
                 button2.Enabled = true;
                 //「ストップ」だったボタンの表示を「スタート」に変更
                 button1.Text = "スタート";
+                Hide();
             }
         }
 
@@ -112,7 +139,6 @@ namespace himanchutime
 
         private void keyboardHook1_KeyboardHooked(object sender, HongliangSoft.Utilities.Gui.KeyboardHookedEventArgs e)
         {
-            //if ("F12".Equals(e.KeyCode.ToString()))
             if (e.AltDown && (e.UpDown.ToString().Equals("Down") && "F12".Equals(e.KeyCode.ToString())))
             {
                 button1_Click(null, null);
