@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Windows.Forms;
 using System.Diagnostics;
+using System.IO;
 
 namespace himanchutime
 {
@@ -143,6 +144,17 @@ namespace himanchutime
             {
                 button1_Click(null, null);
             }
+            if (e.AltDown && (e.UpDown.ToString().Equals("Down") && "F9".Equals(e.KeyCode.ToString())))
+            {
+                WiteFile();
+            }
+
+        }
+        private void WiteFile()
+        {
+            StreamWriter writer = new StreamWriter("KBTest.txt" ,true);
+            writer.WriteLine("ファイルは StreamWriter クラスを使用して作成しました。");
+            writer.Close();
         }
     }
 }
