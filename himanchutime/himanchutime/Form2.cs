@@ -90,7 +90,6 @@ namespace himanchutime
                 button2.Enabled = false;
                 //「スタート」だったボタンの表示を「ストップ」に変更
                 button1.Text = "ストップ";
-                Show();
             }
 
             //スイッチがoff以外のとき（つまりはonのとき）
@@ -106,7 +105,6 @@ namespace himanchutime
                 button2.Enabled = true;
                 //「ストップ」だったボタンの表示を「スタート」に変更
                 button1.Text = "スタート";
-                Hide();
             }
         }
 
@@ -142,19 +140,42 @@ namespace himanchutime
         {
             if (e.AltDown && (e.UpDown.ToString().Equals("Down") && "F12".Equals(e.KeyCode.ToString())))
             {
+                // 測定開始
                 button1_Click(null, null);
             }
             if (e.AltDown && (e.UpDown.ToString().Equals("Down") && "F9".Equals(e.KeyCode.ToString())))
             {
+                // 保存
                 WiteFile();
+                button2_Click(null, null);
             }
+            if (e.AltDown && (e.UpDown.ToString().Equals("Down") && "F8".Equals(e.KeyCode.ToString())))
+            {
+                // 今までの時間を表示
+                label1.Text = Properties.Settings.Default.ひまんちゅたいむ.ToString();
+            }
+            if (e.AltDown && (e.UpDown.ToString().Equals("Down") && "F7".Equals(e.KeyCode.ToString())))
+            {
+                // 今の測定時間を表示
+                label1.Text = myStopWatch.Elapsed.ToString();
+            }
+            if (e.AltDown && (e.UpDown.ToString().Equals("Down") && "F6".Equals(e.KeyCode.ToString())))
+            {
+                // 隠す
+                Hide();
+            }
+            if (e.AltDown && (e.UpDown.ToString().Equals("Down") && "F5".Equals(e.KeyCode.ToString())))
+            {
+                // 見せる
+                Show();
+            }
+
 
         }
         private void WiteFile()
         {
-            StreamWriter writer = new StreamWriter("KBTest.txt" ,true);
-            writer.WriteLine("ファイルは StreamWriter クラスを使用して作成しました。");
-            writer.Close();
+            Properties.Settings.Default.ひまんちゅたいむ = myStopWatch.Elapsed.Add(Properties.Settings.Default.ひまんちゅたいむ);
+            Properties.Settings.Default.Save();
         }
     }
 }
